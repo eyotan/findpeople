@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <resource-ref>
+    <description>postgreSQL Datasource</description>
+    <res-ref-name>jdbc/postgres</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+    <res-sharing-scope>Unshareable</res-sharing-scope>
+  </resource-ref>
+  <filter>
+    <filter-name>filterServlet</filter-name>
+    <filter-class>servlets.FilterServlet</filter-class>
+    <init-param>
+      <param-name>active</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>filterServlet</filter-name>
+    <servlet-name>FilterServlet</servlet-name>
+    <url-pattern>/findpeople.jsp</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <description>
+   	</description>
+    <display-name>findPeopleServlet</display-name>
+    <servlet-name>findPeopleServlet</servlet-name>
+    <servlet-class>servlets.FindPeopleServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>
+   	</description>
+    <display-name>LoginAuthServlet</display-name>
+    <servlet-name>LoginAuthServlet</servlet-name>
+    <servlet-class>servlets.LoginAuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>findPeopleServlet</servlet-name>
+    <url-pattern>/findPeopleServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LoginAuthServlet</servlet-name>
+    <url-pattern>/loginAuthServlet</url-pattern>
+  </servlet-mapping>
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
