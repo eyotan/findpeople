@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+body {
+	padding: 0 0 0 0;
+	margin: 0;
+	font: 12px/1.8 Helvetica, Arial;
+	color: #444;
+	background-color: #f3f3f3;
+	text-align: center;
+}
+
+.loggedInUser{
+	text-align: right;
+}
+
+.loggedInUser label{
+}
+
+.loggedInUser input{
+	border: none;
+}
+
+.searchFormFioBox{
+	padding: 7px 7px 8px;
+}
+
+.searchFormFioBox  label{
+	display: block;
+}
+
+.searchUserButton input{
+	border: none;
+}
+
+.resultSearchTable table{
+	margin: 0 auto; 
+	padding: 7px 7px 8px;
+	
+}

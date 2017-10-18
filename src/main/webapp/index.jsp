@@ -10,28 +10,32 @@
 		type="text/javascript"></script>
       <script src="lib/js.cookie.js" type="text/javascript"></script>
       <script src="js/userauth.js" type="text/javascript"></script>
+      <link type="text/css" rel="stylesheet" href="css/styleindex.css" />
       <title>Авторизация</title>
    </head>
    
    <body>
-    
-    <form method="post" id="loginForm">                            
+   <h1>Авторизация</h1>
 	
-	<label>Авторизация</label>
-	<br>
-	<label for="userLogin">Логин:</label>
-	<input type="text" id="userLogin" />
-
-	<br>
-	<label for="userPassword">Пароль:</label>
-	<input type="password" id="userPassword" />
-	<br>
-	<label for="userCheckbox">Оставаться в системе:</label>
-	<input type="checkbox" id="userCheckbox" />
+	<div class="loginFormBox">    
+    	<form method="post" id="loginForm">                            
 		
-	</form>	
+		<label for="userLogin">Логин:</label>
+		<input type="text" id="userLogin" />
 	
-	<input type="button" id="enterUser" value="Вход" />
-        
+		<label for="userPassword">Пароль:</label>
+		<input type="password" id="userPassword" />
+			
+	</form>
+	</div>
+	
+	<div class="loginButton">
+		<input type="button" id="enterUser" value="Вход" />
+		
+		<label for="userCheckbox">Оставаться в системе:</label>
+		<input type="checkbox" id="userCheckbox" />
+			
+	</div>	
+	        
    </body>
 </html>

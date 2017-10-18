@@ -11,56 +11,55 @@
 	  <script src="lib/js.cookie.js" type="text/javascript"></script>
 	  <script src="js/searchman.js" type="text/javascript"></script>
       <script src="js/userlogout.js" type="text/javascript"></script>
+      <link type="text/css" rel="stylesheet" href="css/styleFindpeople.css" />
       <title>Поиск человека в БД</title>
    </head>
    <body>
-                                
-	<label>Поиск человека в БД</label>
-	<label for="loggedIn">Зарегистрирован как:</label>
-	<label id="loggedIn"></label>
+   
+	<div class="loggedInUser">
+		<label for="loggedIn">Зарегистрирован как:</label>
+		<label id="loggedIn"></label>
+		<br>
+		<input type="button" id="logOut" value="Выход" />
+	</div>
 	
-	<br>
+	<h1>Поиск человека в БД</h1> 	
+			
+	<div class="searchFormFioBox">
 	<form method="post" id="searchFormFio">  
 		
 		<label for="surName">Фамилия:</label>
 		<input type="text" id="surName" />
 	
-	<br>
 		<label for="userName1">Имя:</label>
 		<input type="text" id="userName1" />
 	
-	<br>
 		<label for="userName2">Отчество:</label>
 		<input type="text" id="userName2" />
 		
-	<br>
 		<label for="cityName">Город:</label>
 		<input type="text" id="cityName" />
-		
-	<br>
+	
 		<label for="autoName">Автомобиль:</label>
 		<input type="text" id="autoName" />
+ 		
 	</form>
+	</div>
 	
-		<input type="button" id="searchUser" value="Поиск" />
-		<input type="button" id="logOut" value="Выход" />
-	<br>
-	<br>
-
-	<strong>Результат поиска</strong>:
+	<div class="searchUserButton">
+	<input type="button" id="searchUser" value="Поиск" />
+	</div>
 	
-	<br>
-	<div id="resultSearch"></div>
+	<div class="resultSearchTable">
 	<table cellspacing = "0" id = "resultSearchTable">
 		<tr>
-			<th scope = "col">Имя</th>
 			<th scope = "col">Фамилия</th>
+			<th scope = "col">Имя</th>
 			<th scope = "col">Отчество</th>
 			<th scope = "col">Город</th>
 			<th scope = "col">Авто</th>
 		</tr>
 	</table>
-	                        
-   
+   </div>
    </body>
 </html>
