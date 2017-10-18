@@ -36,9 +36,7 @@ public class FindPeopleServlet extends HttpServlet {
 			String json = new Gson().toJson(queryreq);
 			response.getWriter().write(json);
 		}
-		
-		System.out.println("ATTTR "+request.getSession().getAttribute("user"));
-		
+						
 		try {
 				
 			if(request.getParameter("surName") != null && !request.getParameter("surName").equals("")) {
