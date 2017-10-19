@@ -23,13 +23,13 @@ $(document).ready(function(){
         url: "findPeopleServlet",
 
         beforeSend: $.proxy(function(data) {
-        	var sendFio = false;
+        	var sendFio = true;
             $('form#searchFormFio input').each(function(){
-                if($(this).val() && $(this).val() != ''){
-                	$(this).removeAttr('style');
-                    sendFio = true;
+                if(!$(this).val() || $(this).val() == ''){
+                	$(this).css('border-color','red');
+                	sendFio = false;
                 }else{
-                	$(this).css('border-color','yellow');
+                	$(this).removeAttr('style');
                 }
             });
                     

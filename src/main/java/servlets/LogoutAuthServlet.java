@@ -19,7 +19,7 @@ import com.google.gson.Gson;
  */
 @WebServlet(name = "logoutAuthServlet", urlPatterns = { "/logoutAuthServlet" })
 public class LogoutAuthServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 854394614655135925L;
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -38,7 +38,7 @@ public class LogoutAuthServlet extends HttpServlet {
 			}
 			
 		}catch (NullPointerException ex) {
-            Logger.getLogger(LoginAuthServlet.class.getName()).log(Level.WARNING, null, ex);
+            Logger.getLogger(LogoutAuthServlet.class.getName()).log(Level.WARNING, null, ex);
             response.sendError(500, "ERROR PARAMETERS");
         }
 

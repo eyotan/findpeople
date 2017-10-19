@@ -10,14 +10,13 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 
 public class BaseQuery extends BaseConnPgsql{
-	
 	private static final Logger LOGGER = Logger.getLogger(BaseQuery.class.getName());
-			
+	private final String QUERY_PEOPLE = buildQueryPeople();
+				
 	public String getPeople(Map<String, String> queryreq) {
 		String jsonresult = null;
 		if(connectToBase()) {
-			String querytobase = buildQueryPeople();
-			jsonresult = getData(queryreq, querytobase);
+			jsonresult = getData(queryreq, QUERY_PEOPLE);
 			closeConnections();
 		}
 		return jsonresult;
@@ -40,11 +39,12 @@ public class BaseQuery extends BaseConnPgsql{
 		query.append("left join public.cars as c ");
 		query.append("on p.id = c.id ");
 		query.append("WHERE p.surname = ?");
-		query.append(" OR p.name1 = ?");
-		query.append(" OR p.name2 = ?");
-		query.append(" OR p.city = ?");
-		query.append(" OR c.car = ?");
+		query.append(" AND p.name1 = ?");
+		query.append(" AND p.name2 = ?");
+		query.append(" AND p.city = ?");
+		query.append(" AND c.car = ?");
 		
+
 		return query.toString();
 	}
 	
@@ -67,6 +67,7 @@ public class BaseQuery extends BaseConnPgsql{
             stmt.setString(3, queryreq.get("userName2"));
             stmt.setString(4, queryreq.get("cityName"));
             stmt.setString(5, queryreq.get("autoName"));
+                      
             rs = stmt.executeQuery();
             
             while (rs.next()) {

@@ -10,15 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 /**
  * Servlet implementation class FindPeople
  */
 public class FindPeopleServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2825991113825143494L;
 	
-    @Override
+	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	request.getRequestDispatcher("index.jsp").forward(request, response);
     }
@@ -27,32 +25,26 @@ public class FindPeopleServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String, String> queryreq = new HashMap<>();
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		
-		if(request.getSession().getAttribute("user") == null) {
-			String redirectURL = "findpeople.jsp";
-			queryreq.put("redirect", redirectURL);
-			String json = new Gson().toJson(queryreq);
-			response.getWriter().write(json);
-		}
 						
 		try {
 				
 			if(request.getParameter("surName") != null && !request.getParameter("surName").equals("")) {
-				queryreq.put("surName", request.getParameter("surName"));
+				queryreq.put("surName", request.getParameter("surName").trim());
 			}
 			if(request.getParameter("userName1") != null && !request.getParameter("userName1").equals("")) {
-				queryreq.put("userName1", request.getParameter("userName1"));
+				queryreq.put("userName1", request.getParameter("userName1").trim());
 			}
 			if(request.getParameter("userName2") != null && !request.getParameter("userName2").equals("")) {
-				queryreq.put("userName2", request.getParameter("userName2"));
+				queryreq.put("userName2", request.getParameter("userName2").trim());
 			}
 			if(request.getParameter("cityName") != null && !request.getParameter("cityName").equals("")) {
-				queryreq.put("cityName", request.getParameter("cityName"));
+				queryreq.put("cityName", request.getParameter("cityName").trim());
 			}
 			if(request.getParameter("autoName") != null && !request.getParameter("autoName").equals("")) {
-				queryreq.put("autoName", request.getParameter("autoName"));
+				queryreq.put("autoName", request.getParameter("autoName").trim());
 			}
 			
 		}catch (NullPointerException ex) {

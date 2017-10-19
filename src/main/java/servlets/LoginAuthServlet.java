@@ -20,9 +20,9 @@ import com.google.gson.*;
  * Servlet implementation class LoginAuth
  */
 public class LoginAuthServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -884698119470790521L;
 	
-    @Override
+	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	request.getRequestDispatcher("index.jsp").forward(request, response);
     }
@@ -34,6 +34,7 @@ public class LoginAuthServlet extends HttpServlet {
 		response.setContentType("text/plain");   
 		
 		Map<String, String> queryreq = new HashMap<>();
+		String attributeLogin = "user";
 
 		try {
 			
@@ -56,10 +57,8 @@ public class LoginAuthServlet extends HttpServlet {
 		database.BaseQuery baseGetLogin = new database.BaseQuery(); 
 		String login = baseGetLogin.getLogin(queryreq);
 		
-		
-		
 		if(queryreq.get("userLogin").equals(login)) {
-			request.getSession().setAttribute("user", login);
+			request.getSession().setAttribute(attributeLogin, login);
 			if(queryreq.get("userCheckbox").equals("true")) {
 				Cookie userlogincookie = new Cookie("userLogin", login);
 				userlogincookie.setMaxAge(604800);
