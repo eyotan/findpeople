@@ -21,45 +21,54 @@ import com.google.gson.*;
  */
 public class LoginAuthServlet extends HttpServlet {
 	private static final long serialVersionUID = -884698119470790521L;
-	
-	@Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.getRequestDispatcher("index.jsp").forward(request, response);
-    }
-    /**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	private static String queryFromLogin = new database.BaseQuery().buildQueryLogin();
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-    
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/plain");   
-		
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
 		Map<String, String> queryreq = new HashMap<>();
 		String attributeLogin = "user";
+		Map<String, String> dataForResponse = new HashMap<>();
+		Gson json = new Gson();
+		String stringJson;
 
 		try {
-			
-			if(request.getParameter("userLogin") != null && !request.getParameter("userLogin").equals("")) {
+
+			if (request.getParameter("userLogin") != null && !request.getParameter("userLogin").equals("")) {
 				queryreq.put("userLogin", request.getParameter("userLogin").trim());
 			}
-			if(request.getParameter("userPassword") != null && !request.getParameter("userPassword").equals("")) {
+			if (request.getParameter("userPassword") != null && !request.getParameter("userPassword").equals("")) {
 				String md5 = DigestUtils.md5Hex(request.getParameter("userPassword").trim());
 				queryreq.put("userPassword", md5);
 			}
-			if(request.getParameter("userCheckbox") != null && !request.getParameter("userCheckbox").equals("")) {
+			if (request.getParameter("userCheckbox") != null && !request.getParameter("userCheckbox").equals("")) {
 				queryreq.put("userCheckbox", request.getParameter("userCheckbox").toLowerCase());
 			}
-			
-		}catch (NullPointerException ex) {
-            Logger.getLogger(LoginAuthServlet.class.getName()).log(Level.WARNING, null, ex);
-            response.sendError(500, "ERROR PARAMETERS");
-        }
 
-		database.BaseQuery baseGetLogin = new database.BaseQuery(); 
-		String login = baseGetLogin.getLogin(queryreq);
-		
-		if(queryreq.get("userLogin").equals(login)) {
+		} catch (NullPointerException ex) {
+			Logger.getLogger(LoginAuthServlet.class.getName()).log(Level.WARNING, null, ex);
+			response.sendError(500, "ERROR PARAMETERS");
+		}
+
+		database.BaseResult baseGetLogin = new database.BaseResult();
+		String login = baseGetLogin.getLogin(queryFromLogin, queryreq);
+
+		if (login == null) {
+			dataForResponse.put("error", "Неверный логин или пароль");
+			stringJson = json.toJson(dataForResponse);
+			response.getWriter().write(stringJson);
+		}
+
+		if (queryreq.get("userLogin").equals(login)) {
 			request.getSession().setAttribute(attributeLogin, login);
-			if(queryreq.get("userCheckbox").equals("true")) {
+			if (queryreq.get("userCheckbox").equals("true")) {
 				Cookie userlogincookie = new Cookie("userLogin", login);
 				userlogincookie.setMaxAge(604800);
 				response.addCookie(userlogincookie);
@@ -70,15 +79,16 @@ public class LoginAuthServlet extends HttpServlet {
 			Cookie userlogincookie = new Cookie("userLoginUnbox", login);
 			userlogincookie.setMaxAge(604800);
 			response.addCookie(userlogincookie);
-			
-			String redirectURL = "findpeople.jsp";
-			Map<String, String> data = new HashMap<>();
-			data.put("redirect", redirectURL);
-			String json = new Gson().toJson(data);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(json);
+
+			dataForResponse.put("redirect", "findpeople.jsp");
+			stringJson = json.toJson(dataForResponse);
+			response.getWriter().write(stringJson);
 		}
-		
+
+		if (login != null && login.equals("503")) {
+			dataForResponse.put("error", "Нет соединения с БД");
+			stringJson = json.toJson(dataForResponse);
+			response.getWriter().write(stringJson);
+		}
 	}
 }

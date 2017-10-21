@@ -40,6 +40,9 @@ $(document).ready(function(){
         	if (responseJson.redirect) {
     	        window.location = responseJson.redirect;
     	        return;
+    	    }else{
+        		alert(responseJson.error);
+        		return;
     	    }
             }
     	});
