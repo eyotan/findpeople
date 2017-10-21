@@ -13,47 +13,58 @@ public class DatabaseInsert {
     private static String ssl = "ssl=false";
     private static Connection c;
     private static Connection c1;
+    private static Connection c2;
     private static String url1 = url+user+"&"+pass+"&"+ssl;
-    private static String insertpeoples = "INSERT INTO peoples (id,surname,name1,name2,city) VALUES(?,?,?,?,?)";
+    private static String insertpeoples = "INSERT INTO peoples (id,surname,name,parentname) VALUES(?,?,?,?)";
+    private static String insertcity = "INSERT INTO city (id,cityname) VALUES(?,?)";
     private static String insertcars = "INSERT INTO cars(id,car) VALUES(?,?)";
     private static String insertadmins = "INSERT INTO admins(id,login,pass) VALUES(?,?,?)";
 
     public static void main(String[] args){
-        addToPeoples(insertpeoples, insertcars);
+        addToPeoples(insertpeoples, insertcity, insertcars);
         addAdmins();
     }
 
-    private static void addToPeoples(String insertpeoples, String insertcars){
+    private static void addToPeoples(String insertpeoples, String insertcity, String insertcars){
         try{
             Class.forName("org.postgresql.Driver");
 
             c = DriverManager.getConnection(url1);
             c1 = DriverManager.getConnection(url1);
+            c2 = DriverManager.getConnection(url1);
 
-            PreparedStatement statement = c.prepareStatement(insertpeoples);
-            PreparedStatement statement1 = c1.prepareStatement(insertcars);
+            PreparedStatement statementpeople = c.prepareStatement(insertpeoples);
+            PreparedStatement statementcity = c1.prepareStatement(insertcity);
+            PreparedStatement statementcars = c2.prepareStatement(insertcars);
 
                 for (int i = 0; i < 10; i++) {
                     People people = new People();
-                    statement.setObject(1, people.id);
-                    statement.setString(2, people.surname+i);
-                    statement.setString(3, people.name1+i);
-                    statement.setString(4, people.name2+i);
-                    statement.setString(5, people.city+i);
-                    statement.addBatch();
+                    statementpeople.setObject(1, people.id);
+                    statementpeople.setString(2, people.surname+i);
+                    statementpeople.setString(3, people.name+i);
+                    statementpeople.setString(4, people.parentname+i);
+                    statementcity.setObject(1, people.id);
+                    statementcity.setString(2, people.cityname+i);
+                    statementpeople.addBatch();
+                    statementcity.addBatch();
                     System.out.println("INSERT PEOPLE "+i);
-                    for (int j = 0; j < i; j++){
-                        statement1.setObject(1,people.id);
-                        statement1.setString(2, people.car+j);
-                        statement1.addBatch();
+                    for (int j = 0; j <= i; j++){
+                        statementcars.setObject(1,people.id);
+                        statementcars.setString(2, people.car+j);
+                        statementcars.addBatch();
                     }
                 }
-                statement.executeBatch();
-                statement1.executeBatch();
-                statement.close();
-                statement1.close();
+                statementpeople.executeBatch();
+                statementcity.executeBatch();
+                statementcars.executeBatch();
+
+                statementpeople.close();
+                statementcity.close();
+                statementcars.close();
+
                 c.close();
                 c1.close();
+                c2.close();
 
 
         }catch(ClassNotFoundException | SQLException e){
@@ -98,10 +109,10 @@ public class DatabaseInsert {
 
     private static class People {
         private UUID id = UUID.randomUUID();
-        private String surname = "Ð˜Ð²Ð°Ð½Ð¾Ð²";
-        private String name1 = "Ð˜Ð²Ð°Ð½";
-        private String name2 = "Ð˜Ð²Ð°Ð½Ð¾Ð²Ð¸Ñ‡";
-        private String city = "ÐžÐ¼ÑÐº";
-        private String car = "ÐœÐ°Ð·Ð´Ð°";
+        private String surname = "Èâàíîâ";
+        private String name = "Èâàí";
+        private String parentname = "Èâàíîâè÷";
+        private String cityname = "Îìñê";
+        private String car = "Ìàçäà";
     }
 }
