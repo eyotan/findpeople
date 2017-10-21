@@ -34,17 +34,18 @@ public class BaseQuery extends BaseConnPgsql{
 
 	private String buildQueryPeople() {
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT p.surname, p.name1, p.name2, p.city, c.car ");
+		query.append("SELECT p.surname, p.name, p.parentname, city.cityname, cars.car ");
 		query.append("from public.peoples as p ");
-		query.append("left join public.cars as c ");
-		query.append("on p.id = c.id ");
+		query.append("left join public.city as city ");
+		query.append("on p.id = city.id ");
+		query.append("left join public.cars as cars ");
+		query.append("on p.id = cars.id ");
 		query.append("WHERE p.surname = ?");
-		query.append(" AND p.name1 = ?");
-		query.append(" AND p.name2 = ?");
-		query.append(" AND p.city = ?");
-		query.append(" AND c.car = ?");
-		
-
+		query.append(" AND p.name = ?");
+		query.append(" AND p.parentname = ?");
+		query.append(" AND city.cityname = ?");
+		query.append(" AND cars.car = ?");
+				
 		return query.toString();
 	}
 	
@@ -73,9 +74,9 @@ public class BaseQuery extends BaseConnPgsql{
             while (rs.next()) {
             	Map<String, String> resultmap = new HashMap<>();
             	resultmap.put("surName", rs.getString("surname"));
-            	resultmap.put("userName1", rs.getString("name1"));
-            	resultmap.put("userName2", rs.getString("name2"));
-            	resultmap.put("cityName", rs.getString("city"));
+            	resultmap.put("userName1", rs.getString("name"));
+            	resultmap.put("userName2", rs.getString("parentname"));
+            	resultmap.put("cityName", rs.getString("cityname"));
             	resultmap.put("autoName", rs.getString("car"));
             	arraylist.add(resultmap);
             }
