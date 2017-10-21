@@ -10,9 +10,8 @@ CREATE TABLE peoples
 (
     id uuid NOT NULL,
     surname varchar(64) NOT NULL,
-    name1 varchar(64) NOT NULL,     
-    name2 varchar(64) NOT NULL,
-    city varchar(64) NOT NULL,
+    name varchar(64) NOT NULL,     
+    parentname varchar(64) NOT NULL,
     CONSTRAINT peoples_pkey PRIMARY KEY (id)
 )
 
@@ -29,14 +28,37 @@ COMMENT ON COLUMN peoples.id
 COMMENT ON COLUMN peoples.surname
     IS 'Фамилия';
 
-COMMENT ON COLUMN peoples.name1
+COMMENT ON COLUMN peoples.name
     IS 'Имя';
 
-COMMENT ON COLUMN peoples.name2
+COMMENT ON COLUMN peoples.parentname
     IS 'Отчество';
 
-CREATE INDEX surname_name1
-ON peoples ((surname || ' ' || name1));
+CREATE INDEX surname_name
+ON peoples (surname, name);
+
+CREATE TABLE city
+(
+    id uuid NOT NULL,
+    cityname varchar(64) NOT NULL,
+    CONSTRAINT city_fkey FOREIGN KEY (id)
+        REFERENCES peoples (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+GRANT ALL ON TABLE city TO postgresreaduser;
+
+COMMENT ON TABLE city
+    IS 'Город людей в БД';
+
+COMMENT ON COLUMN city.id
+    IS 'Уникальный номер';
+
+COMMENT ON COLUMN city.cityname
+    IS 'Название города';
 
 CREATE TABLE cars
 (
