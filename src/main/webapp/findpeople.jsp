@@ -12,6 +12,7 @@
 	  <script src="js/searchman.js" type="text/javascript"></script>
       <script src="js/userlogout.js" type="text/javascript"></script>
       <link type="text/css" rel="stylesheet" href="css/styleFindpeople.css" />
+      <link rel="icon" type="image/png" href="favicon.png">
       <title>Поиск человека в БД</title>
    </head>
    <body>
