@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
 <Context path="/findpeople">
-  <Context path="/findpeople"/>
 <Resource name="jdbc/postgres" auth="Container"
           type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
           url="jdbc:postgresql://humaninweb.ru:5432/findpeoples"
-          username="postgresreaduser" password="postgresreaduser" maxTotal="10" maxIdle="5"
-maxWaitMillis="-1"/>
+          username="postgresreaduser" password="postgresreaduser" 
+          maxTotal="10" 
+          maxIdle="5"
+          maxWaitMillis="10000"
+          removeAbandonedOnBorrow="true"
+          removeAbandonedOnMaintenance="true"
+          removeAbandonedTimeout="60" 
+          logAbandoned="true"/>
 </Context>

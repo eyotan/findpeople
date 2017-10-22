@@ -58,7 +58,7 @@ public class BaseResult extends BaseConnPgsql {
 				arraylist.add(resultmap);
 			}
 		} catch (SQLException ex) {
-			LOGGER.log(Level.SEVERE, null, ex);
+			LOGGER.log(Level.WARNING, null, ex);
 		}
 		return arraylist;
 	}
@@ -75,7 +75,7 @@ public class BaseResult extends BaseConnPgsql {
 				stringresult = rs.getString("login");
 			}
 		} catch (SQLException ex) {
-			LOGGER.log(Level.SEVERE, null, ex);
+			LOGGER.log(Level.WARNING, null, ex);
 		}
 
 		return stringresult;

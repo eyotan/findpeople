@@ -20,6 +20,9 @@
     <servlet-name>FilterServlet</servlet-name>
     <url-pattern>/findpeople.jsp</url-pattern>
   </filter-mapping>
+  <listener>
+    <listener-class>listeners.BaseConnListener</listener-class>
+  </listener>
   <servlet>
     <description>
    	</description>
@@ -48,4 +51,12 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error.jsp</location>
+  </error-page> 
+  <error-page>
+    <error-code>405</error-code>
+    <location>/error.jsp</location>
+  </error-page> 
 </web-app>

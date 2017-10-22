@@ -11,7 +11,6 @@
       <script src="lib/js.cookie.js" type="text/javascript"></script>
       <script src="js/userauth.js" type="text/javascript"></script>
       <link type="text/css" rel="stylesheet" href="css/styleindex.css" />
-      <link rel="shortcut icon" href="home_logo_vPK_icon.ico?" type="image/x-icon" />
       <link rel="icon" type="image/png" href="favicon.png">
       <title>Авторизация</title>
    </head>
