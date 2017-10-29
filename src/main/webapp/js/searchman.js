@@ -41,9 +41,9 @@ $(document).ready(function(){
            
         }, this),
         success: function(responseJson){
-        	if (responseJson.redirect) {
-    	        window.location = responseJson.redirect;
-    	        return;
+        	if (responseJson.error) {
+        		alert(responseJson.error);
+        		return;
     	    }else{
     	    	$("#resultSearchTable").find("tr:gt(0)").remove();
     	    	var tableTemp = $("#resultSearchTable");

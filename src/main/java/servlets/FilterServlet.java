@@ -18,45 +18,46 @@ import javax.servlet.http.HttpSession;
 @WebFilter()
 public class FilterServlet implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public FilterServlet() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor.
+	 */
+	public FilterServlet() {
+		
+	}
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
+		
 	}
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
-		HttpServletRequest req = (HttpServletRequest)request;
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+
+		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 		String loginURI = req.getContextPath() + "/index.jsp";
-		
-		boolean loggedIn = session != null && session.getAttribute("user") != null;
-        boolean loginRequest = req.getRequestURI().equals(loginURI);
 
-        if (loggedIn || loginRequest) {
-            chain.doFilter(request, response);
-        } else {
-            res.sendRedirect(loginURI);
-        }
+		boolean loggedIn = session != null && session.getAttribute("user") != null;
+		boolean loginRequest = req.getRequestURI().equals(loginURI);
+
+		if (loggedIn || loginRequest) {
+			chain.doFilter(request, response);
+		} else {
+			res.sendRedirect(loginURI);
+		}
 	}
 
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
+		
 	}
 
 }

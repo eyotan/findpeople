@@ -22,11 +22,13 @@ public class LogoutAuthServlet extends HttpServlet {
 	private static final long serialVersionUID = 854394614655135925L;
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
-			if(request.getParameter("userLogout") != null && !request.getParameter("userLogout").equals("")) {
+			if (request.getParameter("userLogout") != null && !request.getParameter("userLogout").equals("")) {
 				request.getSession().removeAttribute("user");
 				String redirectURL = "index.jsp";
 				Map<String, String> data = new HashMap<>();
@@ -36,11 +38,11 @@ public class LogoutAuthServlet extends HttpServlet {
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(json);
 			}
-			
-		}catch (NullPointerException ex) {
-            Logger.getLogger(LogoutAuthServlet.class.getName()).log(Level.WARNING, null, ex);
-            response.sendError(500, "ERROR PARAMETERS");
-        }
+
+		} catch (NullPointerException ex) {
+			Logger.getLogger(LogoutAuthServlet.class.getName()).log(Level.WARNING, null, ex);
+			response.sendError(500, "ERROR PARAMETERS");
+		}
 
 	}
 
