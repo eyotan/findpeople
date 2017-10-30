@@ -12,7 +12,7 @@ public class BaseResult extends BaseConnPgsql {
 
 	public ArrayList<Map<String, String>> getPeople(String queryToBase, Map<String, String> queryreq) {
 		ArrayList<Map<String, String>> responseMap = new ArrayList<Map<String, String>>();
-		if (connectToBase()) {
+		if (getConnection()) {
 			responseMap = getData(queryreq, queryToBase);
 			closeConnections();
 			return responseMap;
@@ -26,7 +26,7 @@ public class BaseResult extends BaseConnPgsql {
 
 	public String getLogin(String querytobase, Map<String, String> queryreq) {
 		String stringresult = null;
-		if (connectToBase()) {
+		if (getConnection()) {
 			stringresult = getDataLogin(queryreq, querytobase);
 			closeConnections();
 			return stringresult;

@@ -8,31 +8,43 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.naming.InitialContext;
-import javax.sql.DataSource;
+
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 public class BaseConnPgsql implements BaseConnInterface {
 
 	public Connection connection = null;
 	public PreparedStatement stmt = null;
 	public ResultSet rs = null;
-	private InitialContext cxt = null;
+	private static InitialContext cxt = null;
+	public static BasicDataSource ds = null;
 	private static final Logger LOGGER = Logger.getLogger(BaseConnPgsql.class.getName());
 
 	/**
-	 * @return Connection to database
+	 * Connect to Database
 	 */
-	public boolean connectToBase() {
+	public static void connectToBase() {
 		try {
 			cxt = new InitialContext();
 			if (cxt == null) {
 				throw new Exception("NOT CONTEXT");
 			}
-			DataSource ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/postgres");
+			ds = (BasicDataSource) cxt.lookup("java:/comp/env/jdbc/postgres");
 			if (ds == null) {
 				throw new Exception("NOT DATASOURCE");
 			}
-			connection = ds.getConnection();
 		} catch (Exception e) {
+			LOGGER.log(Level.WARNING, null, e);
+		}
+	}
+
+	/**
+	 * @return Connection to database
+	 */
+	public boolean getConnection() {
+		try {
+			connection = ds.getConnection();
+		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, null, e);
 		}
 		return connection != null;

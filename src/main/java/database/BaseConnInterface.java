@@ -5,8 +5,13 @@ public interface BaseConnInterface {
      * Connect to database 
      * @return boolean
      */
-    boolean connectToBase();
-
+    static void connectToBase() {
+	}
+    /**
+     * Get connection 
+     * @return Connection to database
+     */ 
+    boolean getConnection();
     /**
      * Close connection with database
      */

@@ -30,18 +30,21 @@ public class BaseConnListener implements ServletContextListener {
 	 * @see ServletContextListener#contextDestroyed(ServletContextEvent)
 	 */
 	public void contextDestroyed(ServletContextEvent arg0) {
+		try {
+			database.BaseConnPgsql.ds.close();
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, String.format("CLOSE DATASOURCE"));
+			e.printStackTrace();
+		}
 
 		Enumeration<Driver> drivers = DriverManager.getDrivers();
-
 		while (drivers.hasMoreElements()) {
 			Driver driver = drivers.nextElement();
 			try {
 				DriverManager.deregisterDriver(driver);
-				LOGGER.log(Level.INFO, String.format("deregistering jdbc driver: %s", driver));
-
+				LOGGER.log(Level.SEVERE, String.format("deregistering jdbc driver: %s", driver));
 			} catch (SQLException e) {
 				LOGGER.log(Level.SEVERE, String.format("Error deregistering driver %s", driver), e);
-
 			}
 		}
 	}
@@ -50,7 +53,6 @@ public class BaseConnListener implements ServletContextListener {
 	 * @see ServletContextListener#contextInitialized(ServletContextEvent)
 	 */
 	public void contextInitialized(ServletContextEvent arg0) {
-
+		database.BaseConnPgsql.connectToBase();
 	}
-
 }
